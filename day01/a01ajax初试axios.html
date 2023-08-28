@@ -11,7 +11,12 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         axios({
-            url:'http://hmajax.itheima.net/api/province'
+            // 黑马提供的接口链接
+            url:'http://hmajax.itheima.net/api/city',
+            // 携带参数 params
+            params:{ 
+                pname:'福建省'
+            }
         }).then(result => {
             console.log(result.data.list.length);
             document.querySelector('.myaj').innerHTML = result.data.list.join('<br>')

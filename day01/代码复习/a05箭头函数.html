@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>箭头函数书写</title>
+</head>
+
+<body>
+    <div>箭头函数适合替代部分匿名函数</div>
+    <h2>箭头函数不创建自己的this,沿用自己作用域链的上层函数大括号{}的（不是对象的{}的范围）this指向</h2>
+    <h2>因此，dom的click点击事件不推荐使用箭头函数</h2>
+    <script>
+        const fn = function () {
+            console.log('fn:', 123);
+        }
+        fn()
+        // 1 箭头函数基本语法
+        const fn1 = () => {
+            console.log('fn1 基本语法:', 123);
+        }
+        fn1()
+        // 2 带参数
+        const fn2 = (x) => {
+            console.log('fn2 带参数 :', x);
+        }
+        fn2(1)
+        // 2.1 只带1个参数可省略小括号，无参数或者多参数都必须有小括号占位
+        const fn201 = x => {
+            console.log('fn2.1 一个参数省略小括号，无参数或者多参数都必须有小括号占位:', x);
+        }
+        fn201(2.1)
+        // 2.2 多个参数可以用剩余参数...args
+        const fn202 = (...arr) => {
+            let nsum = 0
+            for (let i = 0; i < arr.length; i++) {
+                // console.log(arr[i]);
+                nsum = nsum + arr[i]
+            }
+            return nsum
+            // console.log(nsum);
+        }
+        let res = fn202(1, 2, 3)
+        // console.log(res);
+        console.log('2.2 多个参数可以用剩余参数...args', res);
+
+        // 3 只带1行可以省略大括号
+        const fn3 = x => console.log('fn3 一行逻辑代码省略大括号:', x);
+        fn3(3)
+        // 3.1 只带1行的return可以省略大括号和return
+        // const fn301 = x => {
+        //     return x+x
+        // } ;
+        const fn301 = x => x + x;
+        console.log('3.1 只带1行的return可以省略大括号和return', fn301(3))
+
+        // 4、直接返回一个对象,避免大括号冲突，对象外侧用小括号包裹
+        // const fn4 = (uname) => ({ name:uname})
+        const fn4 = (uname) => ({ uname: uname })
+        console.log('fn4 返回对象，避免大括号冲突，对象外侧用小括号包裹', fn4("刘德华"))
+
+
+    </script>
+</body>
+
+</html>
