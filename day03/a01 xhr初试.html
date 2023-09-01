@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p class="my-p"></p>
+    <script>
+        const myxhr = new XMLHttpRequest()
+        // 使用open方法配置请求，send发送请求
+        myxhr.open('GET', 'http://hmajax.itheima.net/api/province')
+        // loadend事件接收响应
+        myxhr.addEventListener('loadend', () => {
+            console.log(myxhr.response);
+            // 得到的是json字符串，浏览器控制台显示为黑色，需要JSON.parse转换成对象的数据结构
+            const prov = JSON.parse(myxhr.response).list
+            document.querySelector('.my-p').innerHTML = prov.join('<br>')
+        })
+        myxhr.send()
+
+    </script>
+</body>
+
+</html>

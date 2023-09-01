@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise和XHR</title>
+</head>
+
+<body>
+    <div class="pname"></div>
+    <script>
+        // 1. 创建promise对象p
+
+        const p = new Promise((resolve, reject) => {
+            // 2. 执行xhr请求
+            const myxhr = new XMLHttpRequest()
+            myxhr.open('GET','http://hmajax.itheima.net/api/province123')
+            myxhr.addEventListener('loadend',()=>{
+                console.log(myxhr.status);
+                
+                if (myxhr.status>=200 && myxhr.status<300) {
+                    resolve(JSON.parse( myxhr.response))
+                } else{
+                    reject(new Error(myxhr.response))
+                }
+            })
+            myxhr.send()
+        })
+         // 3. p对象针对xhr请求结果进行逻辑处理
+         p.then(result=>{
+            document.querySelector('.pname').innerHTML=result.list.join('<br>')
+         }).catch(error=>{
+            console.dir(error);
+            document.querySelector('.pname').innerHTML=error.message
+         })
+
+    </script>
+</body>
+
+</html>

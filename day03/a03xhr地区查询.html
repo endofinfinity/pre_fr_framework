@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>案例_地区查询</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  <style>
+    :root {
+      font-size: 15px;
+    }
+
+    body {
+      padding-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <form id="editForm" class="row">
+      <!-- 输入省份名字 -->
+      <div class="mb-3 col">
+        <label class="form-label">省份名字</label>
+        <input type="text" value="北京" name="province" class="form-control province" placeholder="请输入省份名称" />
+      </div>
+      <!-- 输入城市名字 -->
+      <div class="mb-3 col">
+        <label class="form-label">城市名字</label>
+        <input type="text" value="北京市" name="city" class="form-control city" placeholder="请输入城市名称" />
+      </div>
+    </form>
+    <button type="button" class="btn btn-primary sel-btn">查询</button>
+    <br><br>
+    <p>地区列表: </p>
+    <ul class="list-group">
+      <!-- 示例地区 -->
+      <li class="list-group-item">东城区</li>
+    </ul>
+  </div>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
+  
+    <!-- 目标: 根据省份和城市名字, 查询对应的地区列表 -->
+    <!-- 1. 查询按钮-点击事件 -->
+    <script>
+        document.querySelector('.sel-btn').addEventListener('click',()=>{
+            // 2. 获取省份城市
+            const pname = document.querySelector('.province').value
+            const cname = document.querySelector('.city').value
+            // 3. 借助URLSearchParams构造请求格式
+            const qOBJ = {
+                pname,
+                cname
+            }
+            const paramsObj = new URLSearchParams(qOBJ)
+            const queryString = paramsObj.toString()
+            // console.log(queryString);
+            // 4. 使用xhr对象请求,并调用send方法
+            const myxhr = new XMLHttpRequest()
+            myxhr.open('get',`http://hmajax.itheima.net/api/area?${queryString}`)
+            myxhr.addEventListener('loadend',()=>{
+                // console.log(myxhr.response);
+                const alist = JSON.parse( myxhr.response).list
+                const alistHtmlStr = alist.map(areaNmae =>{
+                    return `<li class="list-group-item">${areaNmae}</li>`
+                }).join('')
+                // console.log(alistHtmlStr);
+                document.querySelector('.list-group').innerHTML = alistHtmlStr
+            })
+            myxhr.send() 
+
+
+        })
+    </script>
+</body>
+
+</html>

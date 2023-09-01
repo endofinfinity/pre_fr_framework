@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="my-p"></div>
+    <script>
+        // 1. 封装axios函数，接收config对象
+        function myAxios(config) {
+            // 2. 利用promise控制XHR状态
+            return new Promise((resolve, reject) => {
+                // 发起XHR的4步走请求
+                const myxhr = new XMLHttpRequest()
+                // 查询参数在url之前进行判断
+                if (config.params) {
+                    // 使用UrlsearchParams转化为str格式
+                    const paramsObj = new URLSearchParams(config.params)
+                    const paramsStr = paramsObj.toString()
+                    // 请求url字符串拼接
+                    config.url = config.url + '?' + paramsStr
+                }
+                myxhr.open(config.method || 'get', config.url)
+                myxhr.addEventListener('loadend', () => {
+                    if (myxhr.status >= 200 && myxhr.status < 300) {
+                        resolve(JSON.parse(myxhr.response))
+
+                    } else {
+                        reject(new Error(myxhr.response))
+                    }
+                })
+                myxhr.send()
+            })
+
+        }
+
+        // 3. 调用传参，利用promise的方法来实现后续正确和报错的状态逻辑
+        myAxios({
+            url: "http://hmajax.itheima.net/api/area",
+            params: {
+                pname: '河北省',
+                cname: '秦皇岛市'
+            }
+
+        }).then(result => {
+            document.querySelector('.my-p').innerHTML = result.list.join('<br>')
+        }).catch(error => {
+            document.querySelector('.my-p').innerHTML = error.message
+        })
+    </script>
+</body>
+
+</html>
