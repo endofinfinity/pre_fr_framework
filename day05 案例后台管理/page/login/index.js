@@ -16,8 +16,8 @@
         method:'post',
         data
     }).then((result) => {
-        console.log(result);
-        localStorage.setItem('token',result.data.data.token),
+        // console.log(result);
+        localStorage.setItem('token',result.data.token),
         myAlert(true, '登录成功')
         setTimeout(()=>{
             location.href = '../content/index.html'
