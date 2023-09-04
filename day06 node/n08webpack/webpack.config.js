@@ -20,7 +20,8 @@ const config = {
     new HtmlWebpackPlugin({  // Also generate a test.html
       // 绝对路径
       filename: path.resolve(__dirname, 'dist/login/index.html'),
-      template: path.resolve(__dirname, 'public/login.html')
+      template: path.resolve(__dirname, 'public/login.html'),
+      useCdn: process.env.NODE_ENV === 'production', // 生产模式下使用 cdn 引入的地址
     }),
     new MiniCssExtractPlugin({
       filename: './login/index.css'
@@ -79,6 +80,18 @@ const config = {
 // 开发环境下使用 sourcemap 选项
 if (process.env.NODE_ENV === 'development') {
   config.devtool = 'inline-source-map'
+}
+// 生产环境下使用相关配置
+if (process.env.NODE_ENV === 'production') {
+  // 外部扩展（让 webpack 防止 import 的包被打包进来）
+  config.externals = {
+    // key：import from 语句后面的字符串
+    // value：留在原地的全局变量（最好和 cdn 在全局暴露的变量一致）
+    'bootstrap/dist/css/bootstrap.min.css': 'bootstrap',
+    'axios': 'axios',
+    'form-serialize': 'serialize',
+    '@wangeditor/editor': 'wangEditor'
+  }
 }
 
 module.exports = config

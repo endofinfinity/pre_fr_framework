@@ -111,7 +111,7 @@ console.log('开发模式下好用，生产模式下失效')
  *  15.1 在 webpack.config.js 配置 devtool 选项和值开启功能（注意：只在开发环境下使用）
  *  15.2 代码中造成错误，并在开发服务器环境下查看效果
  */
- consolee.warn('123')
+//  consolee.warn('123')
 
 //  目标14 alias别名设置
 // 作用：让我们前端代码引入路径更简单（而且使用绝度路径）
@@ -120,3 +120,8 @@ console.log('开发模式下好用，生产模式下失效')
 // */
 import youAxios from '@/utils/request.js'
 console.log(youAxios)
+// 目标15 生产环境下的cdn分发
+// * 目标17：第三方库使用 CDN 加载引入
+// *  17.1 在 html 中引入第三方库的 CDN 地址并用模板语法判断
+// *  17.2 配置 webpack.config.js 中 externals 外部扩展选项（防止某些 import 的包被打包）
+
