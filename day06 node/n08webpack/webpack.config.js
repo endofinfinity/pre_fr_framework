@@ -12,7 +12,7 @@ const config = {
   entry: {
     'login': path.resolve(__dirname, 'src/login/index.js'),
     'content': path.resolve(__dirname, 'src/content/index.js'),
-    // 'publish': path.resolve(__dirname, 'src/publish/index.js')
+    'publish': path.resolve(__dirname, 'src/publish/index.js')
   },
 
   // 出口
@@ -35,6 +35,12 @@ const config = {
       filename: path.resolve(__dirname, 'dist/content/index.html'), // 输出文件
       useCdn: process.env.NODE_ENV === 'production', // 生产模式下使用 cdn 引入的地址
       chunks: ['content']
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'public/publish.html'), // 模板文件
+      filename: path.resolve(__dirname, 'dist/publish/index.html'), // 输出文件
+      useCdn: process.env.NODE_ENV === 'production', // 生产模式下使用 cdn 引入的地址
+      chunks: ['publish']
     }),
     new MiniCssExtractPlugin({
       filename: './[name]/index.css'
@@ -79,6 +85,8 @@ const config = {
       `...`,
       new CssMinimizerPlugin(),
     ],
+
+    
   },
   // 解析
   resolve: {
