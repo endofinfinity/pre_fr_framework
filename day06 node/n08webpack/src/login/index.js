@@ -72,3 +72,16 @@ document.querySelector('.btn').addEventListener('click', () => {
     })
   })
 
+/**
+ * 目标11：配置开发服务器环境 webpack-dev-server
+ *  11.1 下载 webpack-dev-server 软件包到当前项目
+ *  11.2 设置打包的模式为开发模式，配置自定义命令
+ *  11.3 使用 npm run dev 来启动开发服务器，试试热更新效果
+ */ 
+// 注意1：webpack-dev-server 借助 http 模块创建 8080 默认 Web 服务
+// 注意2：默认以 public 文件夹作为服务器根目录
+// 注意3：webpack-dev-server 根据配置，打包相关代码在内存当中，以 output.path 的值作为服务器根目录（所以可以直接自己拼接访问 dist 目录下内容）
+// 目标10 配置开发环境 
+// 默认localhost：8080，默认找public文件夹的资源，首先找index.html
+// 实际配置了dist默认根目录output.path,但是在内存中，和webpack打包生成的dist无关
+console.log('观察页面是否有自动打包更新')

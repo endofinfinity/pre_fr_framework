@@ -5,6 +5,8 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 
 module.exports = {
+  // 开发模式,默认找public文件夹的资源
+  mode:'development',
     // 入口
   entry: path.resolve(__dirname,'./src/login/index.js'),
     // 出口
