@@ -66,6 +66,8 @@ document.querySelector('.btn').addEventListener('click', () => {
         }
     }).then(res => {
         myAlert(true, '登录成功')
+        localStorage.setItem('token', res.data.token)
+        location.href = '../content/index.html'
 
     }).catch(error => {
         myAlert(false, error.response.data.message)
@@ -125,3 +127,8 @@ console.log(youAxios)
 // *  17.1 在 html 中引入第三方库的 CDN 地址并用模板语法判断
 // *  17.2 配置 webpack.config.js 中 externals 外部扩展选项（防止某些 import 的包被打包）
 
+// 目标16 多页面打包
+//  *  18.1 准备源码（html，css，js）放入相应位置，并改用模块化语法导出
+//  *  18.2 下载 form-serialize 包并导入到核心代码中使用（略过）
+//  *  18.3 配置 webpack.config.js 多入口和多页面的设置
+//  *  18.4 重新打包观察效果

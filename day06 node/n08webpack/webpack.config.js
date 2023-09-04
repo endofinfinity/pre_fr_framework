@@ -8,11 +8,17 @@ const config = {
   // 开发模式,默认找public文件夹的资源
   mode: 'development',
   // 入口
-  entry: path.resolve(__dirname, './src/login/index.js'),
+  // entry: path.resolve(__dirname, './src/login/index.js'),
+  entry: {
+    'login': path.resolve(__dirname, 'src/login/index.js'),
+    'content': path.resolve(__dirname, 'src/content/index.js'),
+    // 'publish': path.resolve(__dirname, 'src/publish/index.js')
+  },
+
   // 出口
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: './login/index.js',
+    filename: './[name]/index.js',
     clean: true
   },
   // http自动打包
@@ -22,9 +28,16 @@ const config = {
       filename: path.resolve(__dirname, 'dist/login/index.html'),
       template: path.resolve(__dirname, 'public/login.html'),
       useCdn: process.env.NODE_ENV === 'production', // 生产模式下使用 cdn 引入的地址
+      chunks:['login']
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'public/content.html'), // 模板文件
+      filename: path.resolve(__dirname, 'dist/content/index.html'), // 输出文件
+      useCdn: process.env.NODE_ENV === 'production', // 生产模式下使用 cdn 引入的地址
+      chunks: ['content']
     }),
     new MiniCssExtractPlugin({
-      filename: './login/index.css'
+      filename: './[name]/index.css'
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
