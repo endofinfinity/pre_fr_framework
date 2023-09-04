@@ -6,21 +6,21 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
   // 开发模式,默认找public文件夹的资源
-  mode:'development',
-    // 入口
-  entry: path.resolve(__dirname,'./src/login/index.js'),
-    // 出口
+  mode: 'development',
+  // 入口
+  entry: path.resolve(__dirname, './src/login/index.js'),
+  // 出口
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: './login/index.js',
-    clean:true
+    clean: true
   },
   // http自动打包
-  plugins:[
+  plugins: [
     new HtmlWebpackPlugin({  // Also generate a test.html
       // 绝对路径
-      filename: path.resolve(__dirname,'dist/login/index.html'),
-      template: path.resolve(__dirname,'public/login.html')
+      filename: path.resolve(__dirname, 'dist/login/index.html'),
+      template: path.resolve(__dirname, 'public/login.html')
     }),
     new MiniCssExtractPlugin({
       filename: './login/index.css'
@@ -33,13 +33,13 @@ module.exports = {
       {
         test: /\.css$/i,
         // use: ["style-loader", "css-loader"],
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [process.env.NODE_ENV = 'development' ? 'style-loader' : MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.less$/i,
         use: [
           // compiles Less to CSS
-          MiniCssExtractPlugin.loader,
+          process.env.NODE_ENV = 'development' ? 'style-loader' : MiniCssExtractPlugin.loader,
           'css-loader',
           'less-loader',
         ],
@@ -63,6 +63,6 @@ module.exports = {
       new CssMinimizerPlugin(),
     ],
   },
-  
+
 
 };

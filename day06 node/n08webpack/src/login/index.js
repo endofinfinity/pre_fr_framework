@@ -1,5 +1,5 @@
 // 目标1 体验webpack
-import {checkPhone,checkCode} from '../utils/check.js'
+import { checkPhone, checkCode } from '../utils/check.js'
 console.log(checkPhone('13212345678'));
 console.log(checkCode('13212345'));
 
@@ -28,7 +28,7 @@ import './index.css'
 import './index.less'
 // 目标8 资源打包
 // 创建 img 标签并动态添加到页面，配置 webpack.config.js
-import imgObj from  './assets/logo.png'
+import imgObj from './assets/logo.png'
 const theImg = document.createElement('img')
 theImg.src = imgObj
 document.querySelector('.login-wrap').appendChild(theImg)
@@ -44,44 +44,54 @@ import { myAlert } from '../utils/alert.js';
 document.querySelector('.btn').addEventListener('click', () => {
     const phone = document.querySelector('.login-form [name=mobile]').value
     const code = document.querySelector('.login-form [name=code]').value
-  
-    if (!checkPhone(phone)) {
-      myAlert(false, '手机号长度必须是11位')
-      console.log('手机号长度必须是11位')
-      return
-    }
-  
-    if (!checkCode(code)) {
-      myAlert(false, '验证码长度必须是6位')
-      console.log('验证码长度必须是6位')
-      return
-    }
-  
-    myAxios({
-      url: '/v1_0/authorizations',
-      method: 'POST',
-      data: {
-        mobile: phone,
-        code: code
-      }
-    }).then(res => { 
-      myAlert(true, '登录成功')
-      
-    }).catch(error => {
-      myAlert(false, error.response.data.message)
-    })
-  })
 
+    if (!checkPhone(phone)) {
+        myAlert(false, '手机号长度必须是11位')
+        console.log('手机号长度必须是11位')
+        return
+    }
+
+    if (!checkCode(code)) {
+        myAlert(false, '验证码长度必须是6位')
+        console.log('验证码长度必须是6位')
+        return
+    }
+
+    myAxios({
+        url: '/v1_0/authorizations',
+        method: 'POST',
+        data: {
+            mobile: phone,
+            code: code
+        }
+    }).then(res => {
+        myAlert(true, '登录成功')
+
+    }).catch(error => {
+        myAlert(false, error.response.data.message)
+    })
+})
+
+// 目标10 配置开发环境 
+// 默认localhost：8080，默认找public文件夹的资源，首先找index.html
+// 实际配置了dist默认根目录output.path,但是在内存中，和webpack打包生成的dist无关
 /**
  * 目标11：配置开发服务器环境 webpack-dev-server
  *  11.1 下载 webpack-dev-server 软件包到当前项目
  *  11.2 设置打包的模式为开发模式，配置自定义命令
  *  11.3 使用 npm run dev 来启动开发服务器，试试热更新效果
- */ 
+ */
 // 注意1：webpack-dev-server 借助 http 模块创建 8080 默认 Web 服务
 // 注意2：默认以 public 文件夹作为服务器根目录
 // 注意3：webpack-dev-server 根据配置，打包相关代码在内存当中，以 output.path 的值作为服务器根目录（所以可以直接自己拼接访问 dist 目录下内容）
-// 目标10 配置开发环境 
-// 默认localhost：8080，默认找public文件夹的资源，首先找index.html
-// 实际配置了dist默认根目录output.path,但是在内存中，和webpack打包生成的dist无关
+
 console.log('观察页面是否有自动打包更新')
+
+// 目标11 webpack cross-env配置
+// * 目标13：webpack 环境下区分两种模式
+//  *  开发模式：style-loader 内嵌 css 代码在 js 中，让热替换更快
+//  *  生产模式：提取 css 代码，让浏览器缓存和并行下载 js 和 css 文件
+//  *  13.1 下载 cross-env 软件包到当前项目中
+//  *  13.2 配置自定义命令，传入参数名和值到 process.env 对象上（它是 Node.js 环境变量）
+//  *  13.3 在 webpack.config.js 调用使用做判断区分
+//  *  13.4 重新打包观察两种模式区别
