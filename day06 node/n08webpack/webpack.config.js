@@ -86,6 +86,21 @@ const config = {
       new CssMinimizerPlugin(),
     ],
 
+    // 代码分割公共部分打包
+    splitChunks: {
+      chunks: 'all', // 所有模块动态非动态移入的都分割分析
+      cacheGroups: { // 分隔组
+        commons: { // 抽取公共模块
+          minSize: 0, // 抽取的chunk最小大小字节
+          minChunks: 2, // 最小引用数
+          reuseExistingChunk: true, // 当前 chunk 包含已从主 bundle 中拆分出的模块，则它将被重用
+          name(module, chunks, cacheGroupKey) { // 分离出模块文件名
+            const allChunksNames = chunks.map((item) => item.name).join('~') // 模块名1~模块名2
+            return `./js/${allChunksNames}` // 输出到 dist 目录下位置
+          }
+        }
+      }
+    }
     
   },
   // 解析
