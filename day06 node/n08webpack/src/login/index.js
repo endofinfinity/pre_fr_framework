@@ -95,3 +95,10 @@ console.log('观察页面是否有自动打包更新')
 //  *  13.2 配置自定义命令，传入参数名和值到 process.env 对象上（它是 Node.js 环境变量）
 //  *  13.3 在 webpack.config.js 调用使用做判断区分
 //  *  13.4 重新打包观察两种模式区别
+
+// 目标12 前端参数注入
+// webpack 中配置 DefinePlugin 插件
+if (process.env.NODE_ENV === 'production') {
+    console.log = function () { }
+}
+console.log('开发模式下好用，生产模式下失效')
