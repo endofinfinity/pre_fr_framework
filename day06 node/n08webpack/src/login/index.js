@@ -102,3 +102,21 @@ if (process.env.NODE_ENV === 'production') {
     console.log = function () { }
 }
 console.log('开发模式下好用，生产模式下失效')
+
+// 目标13 source-map调试代码
+/**
+ * 目标15：source-map 调试代码
+ *  问题：error 和 warning 代码的位置和源代码对不上，不方便我们调试！
+ *  解决：启动 webpack 的 source-map 资源地图功能
+ *  15.1 在 webpack.config.js 配置 devtool 选项和值开启功能（注意：只在开发环境下使用）
+ *  15.2 代码中造成错误，并在开发服务器环境下查看效果
+ */
+ consolee.warn('123')
+
+//  目标14 alias别名设置
+// 作用：让我们前端代码引入路径更简单（而且使用绝度路径）
+// *  16.1 在 webpack.config.js 中配置 resolve.alias 选项
+// *  16.2 在代码中尝试并在开发环境和生产环境测试效果
+// */
+import youAxios from '@/utils/request.js'
+console.log(youAxios)

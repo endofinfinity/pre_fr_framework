@@ -4,8 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const webpack =require('webpack')
 
-
-module.exports = {
+const config = {
   // 开发模式,默认找public文件夹的资源
   mode: 'development',
   // 入口
@@ -67,6 +66,19 @@ module.exports = {
       new CssMinimizerPlugin(),
     ],
   },
+  // 解析
+  resolve: {
+    // 别名
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
+  }
 
 
 };
+// 开发环境下使用 sourcemap 选项
+if (process.env.NODE_ENV === 'development') {
+  config.devtool = 'inline-source-map'
+}
+
+module.exports = config
