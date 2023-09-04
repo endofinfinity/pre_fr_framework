@@ -22,7 +22,9 @@ module.exports = {
       filename: path.resolve(__dirname,'dist/login/index.html'),
       template: path.resolve(__dirname,'public/login.html')
     }),
-    new MiniCssExtractPlugin()
+    new MiniCssExtractPlugin({
+      filename: './login/index.css'
+    })
 
   ],
   // css加载器（loader）自动打包
