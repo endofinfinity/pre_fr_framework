@@ -62,3 +62,11 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# node，webpack
+node_modules
+dist
+
+# 秘钥
+*.pem
+*.cer
